@@ -59,30 +59,41 @@ concrete questions, not abstract ones. When offering a choice, explain what each
 what it costs — never offer a bare technology name as an option. If a paragraph needs a second
 read, rewrite it.
 
-## Current repository state
+## Repository state and commands
 
-There is **no application code yet**. The repo holds documentation, an empty `frontend/`
-placeholder, and a working `infra/docker-compose.yml` that starts PostgreSQL. Phase 1 has not
-started, so there are no build, lint or test commands to run yet — do not invent them or assume a
-scaffold exists.
-
-Phase 1 creates this layout — **one Maven project at the root**, with no `backend/` folder:
+Phase 1 skeleton is in place: Spring Boot 4.1.1 (Java 25) + Angular 22.2.0 in **one Maven project at
+the root**, with no `backend/` folder. There is no domain code yet (Phase 2): no database access, no
+Flyway, no security. `GET /api/health` is the only endpoint.
 
 ```
 MediCare/
-├── pom.xml                 the whole app: Spring Boot 4.1.x, Java 25
-├── src/main/java/com/medicare/...
-├── src/main/resources/     application.yml, db/migration (Flyway)
+├── pom.xml                 the whole app, and it builds Angular too
+├── src/main/java/com/medicare/...      health/, config/ (SPA fallback)
+├── src/main/resources/     application.yml (db/migration arrives with Flyway in Phase 2)
 ├── src/test/java/
 ├── frontend/               Angular 22, built into the jar by Maven
 ├── docs/medicare/
 ├── infra/docker-compose.yml
-└── .github/workflows/
+└── .github/workflows/ci.yml
 ```
 
-After Phase 1 the commands will be `mvn spring-boot:run` (whole app on :8080) and `mvn package`
-(one jar with Angular inside). Replace this section with the real build/test/lint commands then,
-including how to run a single test on each side.
+Needs JDK 25 and Maven installed (there is no `mvnw`). Every `mvn` run also builds Angular and
+downloads Node into `frontend/node/`, which is slow. For backend-only work add
+`-Dskip.installnodenpm -Dskip.npm` to any command below.
+
+| Task | Command |
+|---|---|
+| Run the whole app on :8080 (API, UI, `/swagger-ui.html`) | `mvn spring-boot:run` |
+| Run the UI on :4200, proxying `/api` to :8080 | `cd frontend && npm start` |
+| Everything CI runs (lint, format, tests, jar) | `mvn verify` |
+| One jar with Angular inside | `mvn package` |
+| One Java test class / method | `mvn -Dtest=HealthControllerTest test` / `-Dtest='HealthControllerTest#healthReportsUp'` |
+| One Angular spec | `cd frontend && npm test -- --no-watch --include src/app/app.spec.ts` |
+| Fix Java formatting (CI runs `spotless:check`) | `mvn spotless:apply` |
+| Angular lint / Prettier check | `cd frontend && npm run lint` / `npm run format:check` |
+| Fix Angular formatting | `cd frontend && npx prettier --write .` |
+
+`mvn -Dtest=... test` still runs the Angular tests unless you add the skip flags.
 
 ## Architecture intent
 
