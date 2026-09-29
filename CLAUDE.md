@@ -132,7 +132,8 @@ practiced, what is still weak, what to revisit.
 - Trunk-based: short-lived branches, PR into `main`, squash merge, conventional commits
   (`feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`). Small PRs, one concern each.
 - Delete a feature branch only after its PR is merged.
-- When the user finishes a task, remind them to update `docs/medicare/04-progress-log.md`.
+- Claude keeps `docs/medicare/04-progress-log.md` up to date: tick a checklist item as soon as it is
+  done and verified, and keep "Current phase" accurate. Do not hand this back to the user.
 - Flyway migrations are append-only — never edit an applied migration.
 
 ## Hard constraints

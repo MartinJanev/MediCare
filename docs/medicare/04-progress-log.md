@@ -3,19 +3,19 @@
 Update this after each work session. Claude reads it to know where you are and what to review next.
 
 ## Current phase
-Phase 1: Foundations (not started)
+Phase 1: Foundations (in progress)
 
 ## Phase checklist
 ### Phase 1: Foundations
-- [ ] Root `pom.xml` — Spring Boot 4.1.x, Java 25
-- [ ] Angular 22 project in `frontend/`
-- [ ] `frontend-maven-plugin` builds Angular into the jar (`mvn package` produces one artifact)
-- [ ] `proxy.conf.json` so `npm start` on :4200 reaches the backend on :8080
-- [ ] Deep-link fallback: unknown non-`/api` paths serve `index.html`
-- [ ] Docker Compose with PostgreSQL (done, in `infra/`)
-- [ ] CI: one GitHub Actions job running `mvn verify`
-- [ ] Spotless, ESLint, Prettier
-- [ ] springdoc Swagger UI reachable
+- [x] Root `pom.xml` — Spring Boot 4.1.1, Java 25
+- [x] Angular 22.2.0 project in `frontend/`
+- [x] `frontend-maven-plugin` builds Angular into the jar (`mvn package` produces one artifact)
+- [x] `proxy.conf.json` so `npm start` on :4200 reaches the backend on :8080
+- [x] Deep-link fallback: unknown non-`/api` paths serve `index.html`
+- [x] Docker Compose with PostgreSQL (done, in `infra/`)
+- [x] CI: one GitHub Actions job running `mvn verify`
+- [x] Spotless, ESLint, Prettier
+- [x] springdoc Swagger UI reachable
 - [ ] `/api/health` endpoint displayed by an Angular page
 - [ ] Phase review with Claude
 

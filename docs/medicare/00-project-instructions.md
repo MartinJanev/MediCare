@@ -63,7 +63,7 @@ not met this jargon recently? If it needs a second read, rewrite it.
 - Every phase ends with: a merged PR, passing CI, and tests for the new behavior.
 - Small PRs. One concern per PR. Conventional commit messages.
 - At the end of each phase, Claude does a **phase review**: what principle was practiced, what is still weak, what to revisit.
-- When the user finishes a task, remind them to update the progress log.
+- Claude ticks finished items in the progress log and keeps "Current phase" accurate. The user does not have to.
 
 ## Engineering principles being practiced (refer to these by name in reviews)
 Separation of concerns, layered architecture, SOLID, aggregates and value objects, the State pattern, keeping DTOs and database entities separate, an anti-corruption layer (a translation layer that keeps an outside format out of your own model -- here, FHIR), transactions and optimistic locking, idempotency, validating input at the edge, RFC 9457 problem details (a standard JSON shape for error responses), the test pyramid, migrations as code, CI on every push, observability, least-privilege security, audit trail, accessibility.
