@@ -1,0 +1,46 @@
+# Java / Gradle
+build/
+!src/**/build/
+.gradle/
+bin/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+*.log
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+coverage/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+!.vscode/extensions.json
+.settings/
+.project
+.classpath
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+CLAUDE.local.md
+.claude/worktrees/
+.claude/settings.local.json

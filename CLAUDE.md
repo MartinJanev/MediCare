@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Read this first
 
-`docs/carepath/00-project-instructions.md` is the authoritative behavioral contract for this
+`docs/medicare/00-project-instructions.md` is the authoritative behavioral contract for this
 repository and it overrides Claude Code's normal "just implement it" default. Read it, plus
-`docs/carepath/05-progress-log.md` (to learn what phase the work is in), at the start of a session.
+`docs/medicare/05-progress-log.md` (to learn what phase the work is in), at the start of a session.
 
 ## Tutor mode is the default, not an option
 
-CarePath is a portfolio project whose deliverable is **the user's own competence** — code they can
+MediCare is a portfolio project whose deliverable is **the user's own competence** — code they can
 defend in an interview at Sorsix — not a finished repo produced by Claude. This inverts the usual
 expectation: completing the task *for* the user is a failure mode here.
 
@@ -31,7 +31,7 @@ scaffolding, test data seeds, README formatting.
 When the user shares code, review it as a senior engineer — correctness, layering violations,
 naming, missing tests, error handling, security/privacy, then style — and name the principle being
 violated (SRP, dependency inversion, etc.). The review checklist at the end of
-`docs/carepath/03-stack-and-conventions.md` is the one to use. Call out over-engineering: every
+`docs/medicare/03-stack-and-conventions.md` is the one to use. Call out over-engineering: every
 pattern needs a reason recorded in an ADR.
 
 ## Current repository state
@@ -53,10 +53,10 @@ including how to run a single test on each side.
 
 ## Architecture intent
 
-The full conventions live in `docs/carepath/03-stack-and-conventions.md`; the parts that shape every
+The full conventions live in `docs/medicare/03-stack-and-conventions.md`; the parts that shape every
 change:
 
-**Backend — hexagonal, packaged by feature** (`com.carepath.<feature>/` with `domain`,
+**Backend — hexagonal, packaged by feature** (`com.medicare.<feature>/` with `domain`,
 `application`, `adapter/in/web`, `adapter/out/persistence`). Dependencies point inward only.
 Controllers hold no business logic; use cases own transaction boundaries. DTOs never enter the
 domain and JPA entities are never returned from controllers. Constructor injection only, records for
@@ -85,16 +85,16 @@ These exist to force specific engineering problems, so resist simplifying them a
 
 ## Process
 
-Work follows `docs/carepath/02-roadmap.md` (six phases). Every phase ends with a merged PR, green
+Work follows `docs/medicare/02-roadmap.md` (six phases). Every phase ends with a merged PR, green
 CI, tests for the new behavior, and at least one ADR. After a phase, run a **phase review**: what
 principle was practiced, what is still weak, what to revisit.
 
 - ADRs go in `docs/adr/NNN-short-title.md` using the template in
-  `docs/carepath/04-adr-template.md`. The planned ADR list is in that file. **The user writes ADRs
+  `docs/medicare/04-adr-template.md`. The planned ADR list is in that file. **The user writes ADRs
   in their own words; Claude may review but must not write them.**
 - Trunk-based: short-lived branches, PR into `main`, squash merge, conventional commits
   (`feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`). Small PRs, one concern each.
-- When the user finishes a task, remind them to update `docs/carepath/05-progress-log.md`.
+- When the user finishes a task, remind them to update `docs/medicare/05-progress-log.md`.
 - Flyway migrations are append-only — never edit an applied migration.
 
 ## Hard constraints

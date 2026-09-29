@@ -1,4 +1,4 @@
-# CarePath: Roadmap (about 9 weeks)
+# MediCare: Roadmap (about 9 weeks)
 
 Each phase ends with: a merged PR, green CI, tests for new behavior, and one ADR. Adjust timing to the user's availability. Track status in `05-progress-log.md`.
 

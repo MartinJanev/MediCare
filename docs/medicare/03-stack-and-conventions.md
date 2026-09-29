@@ -1,4 +1,4 @@
-# CarePath: Stack and Conventions
+# MediCare: Stack and Conventions
 
 Versions below were current as of late September 2026. Pin exact versions in the repo and re-check for newer stable releases when starting each phase. Do not rely on memory for version numbers; search when in doubt.
 
@@ -16,7 +16,7 @@ Versions below were current as of late September 2026. Pin exact versions in the
 
 ## Backend architecture: hexagonal, package by feature
 ```
-com.carepath.<feature>/
+com.medicare.<feature>/
   domain/            entities, value objects, domain services, domain events (no web/persistence details)
   application/       use cases (one class per use case), ports (interfaces)
   adapter/in/web/    controllers, request/response DTOs, mappers

@@ -1,4 +1,4 @@
-# CarePath: Progress Log
+# MediCare: Progress Log
 
 Update this after each work session. Claude reads it to know where you are and what to review next.
 
