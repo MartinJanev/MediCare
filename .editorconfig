@@ -18,5 +18,5 @@ trim_trailing_whitespace = false
 [*.{bat,cmd}]
 end_of_line = crlf
 
-[gradlew]
+[mvnw]
 end_of_line = lf

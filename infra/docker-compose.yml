@@ -1,0 +1,42 @@
+# Local development infrastructure for MediCare.
+#
+#   cd infra && docker compose up -d      start the database
+#   docker compose ps                     check health
+#   docker compose down                   stop, keep data
+#   docker compose down -v                stop and wipe the data volume
+#
+# Schema is owned by Flyway (see src/main/resources/db/migration), never by init
+# scripts in here.
+
+name: medicare
+
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: medicare-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-medicare}
+      POSTGRES_USER: ${POSTGRES_USER:-medicare}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-medicare}
+    ports:
+      # Override POSTGRES_PORT in infra/.env if 5432 is taken by a local install.
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # postgres:18+ declares its volume at /var/lib/postgresql and puts the
+      # cluster in a version-scoped subdirectory (/var/lib/postgresql/18/docker).
+      # Mounting the pre-18 path (/var/lib/postgresql/data) silently loses data.
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      # "container running" is not "accepting connections". Services added later
+      # (and CI) wait on this via depends_on: condition: service_healthy.
+      test:
+        ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-medicare} -d ${POSTGRES_DB:-medicare}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  pgdata:
+    name: medicare-pgdata

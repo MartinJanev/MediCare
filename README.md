@@ -29,9 +29,11 @@ Three features were chosen because each forces a real engineering problem:
 
 ## Stack
 
-Spring Boot (Gradle) · Angular (standalone components, signals) · PostgreSQL · Flyway ·
-Docker Compose. Backend is hexagonal and packaged by feature; the TypeScript API client is
-generated from OpenAPI.
+One Maven project at the repo root: Spring Boot (Java) serves the API and, in the same jar,
+the built Angular app (standalone components, signals). PostgreSQL with Flyway migrations,
+Postgres started via Docker Compose. The backend is plainly layered and packaged by feature
+-- controller, service, repository per feature. TypeScript model types are hand-written to
+match the API, which springdoc documents at `/swagger-ui.html`.
 
 ## Data and privacy
 
@@ -41,13 +43,13 @@ variables and are never committed.
 
 ## Status
 
-Pre-Phase 1: documentation only, no application code yet. Run instructions land with the
-Phase 1 scaffold.
+Pre-Phase 1: documentation only, no application code yet. Once Phase 1 lands, running it is
+`docker compose -f infra/docker-compose.yml up -d` followed by `mvn spring-boot:run`, and the
+app is at `http://localhost:8080`.
 
 ## Docs
 
 - Specification, roadmap, and conventions: [`docs/medicare/`](docs/medicare/)
-- Architecture decision records: [`docs/adr/`](docs/adr/)
 
 ## Contributing
 
