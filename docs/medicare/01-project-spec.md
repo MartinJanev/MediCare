@@ -20,18 +20,18 @@ A small radiology referral and scheduling system. It is an independent portfolio
 6. Exam status progresses: scheduled, arrived, in progress, completed. Cancellation possible before completion.
 
 ## Three deliberately hard features
-Each exists because it forces a real engineering problem.
+Each exists because it forces a real engineering problem. These stay, even as everything around them is kept simple.
 
-1. **Referral lifecycle as a data-driven state machine.** Statuses and allowed transitions (with required role and guard conditions) are stored as data, not hardcoded `if` chains. Mirrors Sorsix's configurable "pathway" idea. Practices: State pattern, validation, domain events, test tables.
-2. **Slot booking that cannot double-book.** Two schedulers booking the same slot simultaneously must result in exactly one success and one clean conflict error. Practices: transactions, optimistic locking (`@Version`), unique constraints, idempotency keys, concurrency tests against a real Postgres.
-3. **FHIR-shaped API edge.** Internal domain model is independent of FHIR. An adapter layer maps `Patient` -> FHIR Patient, `Referral` -> ServiceRequest, `Appointment` -> Appointment. Practices: anti-corruption layer, mapper tests, contract thinking. Record the FHIR version choice in an ADR.
+1. **Referral lifecycle as a data-driven state machine.** Statuses and allowed transitions (with required role and guard conditions) are stored as rows in the database, not as hardcoded `if` chains. Mirrors Sorsix's configurable "pathway" idea. Practices: State pattern, validation, test tables.
+2. **Slot booking that cannot double-book.** Two schedulers booking the same slot at the same moment must result in exactly one success and one clean conflict error. Practices: transactions, optimistic locking (a version column that makes a stale update fail), unique constraints, idempotency keys (a client-supplied id that makes a retry safe), concurrency tests against a real Postgres.
+3. **FHIR-shaped API edge.** FHIR is the standard data format healthcare systems exchange. The internal model stays independent of it, and a thin translation layer maps `Patient` -> FHIR Patient, `Referral` -> ServiceRequest, `Appointment` -> Appointment. Practices: anti-corruption layer, mapper tests, contract thinking.
 
 ## Cross-cutting requirements
-- **Security:** authentication (JWT/OIDC), role-based access control enforced on the backend, least privilege, no secrets in the repo.
-- **Audit trail:** who did what to which referral/appointment and when; append-only.
+- **Security:** users log in with a username and password; the app issues its own token (JWT) and checks roles on the backend for every endpoint. Least privilege. No secrets in the repo.
+- **Audit trail:** who did what to which referral/appointment and when; append-only. The service method writes the audit row directly.
 - **Privacy:** synthetic data only (for example Synthea), no PHI in logs, GDPR-aware design notes in the README.
 - **Accessibility:** keyboard operable, screen-reader friendly, sensible focus management, contrast. Clinical UIs must be usable by everyone.
-- **API quality:** OpenAPI as source of truth, generated TypeScript client, RFC 9457 problem-detail errors, pagination and filtering on list endpoints.
+- **API quality:** springdoc reads the controllers and publishes a Swagger UI, so the API documents itself. TypeScript types on the frontend are written by hand to match. RFC 9457 problem-detail errors (a standard JSON error shape). Pagination and filtering on list endpoints.
 
 ## Domain sketch (starting point, the user should refine it)
 - `Patient` (id, name, date of birth, identifier)
@@ -46,7 +46,8 @@ Each exists because it forces a real engineering problem.
 Real DICOM/PACS integration, real billing/claims, real patient data, mobile apps, multi-tenancy, AI features (the point of this project is fundamentals).
 
 ## Definition of "portfolio ready"
-- README with architecture diagram, run instructions (one command via Docker Compose), and a "design decisions" section linking ADRs.
+- README with an architecture diagram and run instructions: start Postgres with Docker Compose, then one Maven command runs the whole app.
+- A short "why I built it this way" section in the README, in the user's own words.
 - CI green with unit, integration and end-to-end tests.
 - Seeded demo data and a live or recorded demo.
-- The user can explain every design decision in an interview.
+- The user can explain every design decision in an interview, out loud, without notes.
