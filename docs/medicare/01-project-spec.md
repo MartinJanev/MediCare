@@ -1,4 +1,4 @@
-# CarePath: Project Specification
+# MediCare: Project Specification
 
 A small radiology referral and scheduling system. It is an independent portfolio project inspired by the problem space of Sorsix (eReferrals and triage, digital patient pathways, RIS scheduling, FHIR interoperability). It is not a clone of Pinga and uses no Sorsix branding.
 
