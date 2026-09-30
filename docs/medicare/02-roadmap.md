@@ -41,7 +41,7 @@ Tasks
 - Conventional commits, branch + PR workflow even though the user works alone; review your own PRs.
 - An `/api/health` endpoint and an Angular page that calls it and shows the result.
 
-Learning objectives: build automation, how a single deployable is assembled, reproducible environments, CI, trunk-based workflow.
+Learning objectives: build automation, how a single deployable is assembled, reproducible environments, CI, a develop/main branch workflow.
 
 Done when: fresh clone, database up, `./mvnw spring-boot:run`, and the browser shows a health status fetched from the backend. CI green.
 

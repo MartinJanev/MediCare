@@ -53,8 +53,9 @@ app is at `http://localhost:8080`.
 
 ## Contributing
 
-Trunk-based: short-lived branches, PR into `main` (required by branch rule), squash merge,
-conventional commits.
+Short-lived branches, PR into `develop`, squash merge, conventional commits. `main` holds the
+production code: it is updated once per finished phase, through a merge-commit PR from `develop`
+(required by branch rule).
 
 ## License
 
