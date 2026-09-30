@@ -137,12 +137,17 @@ These exist to force specific engineering problems, so resist simplifying them a
 
 ## Process
 
-Work follows `docs/medicare/02-roadmap.md` (six phases). Every phase ends with a merged PR, green
-CI, and tests for the new behavior. After a phase, run a **phase review**: what principle was
-practiced, what is still weak, what to revisit.
+Work follows `docs/medicare/02-roadmap.md` (six phases). Every phase ends with green CI, tests for
+the new behavior, and a **phase review**: what principle was practiced, what is still weak, what to
+revisit.
 
-- Trunk-based: short-lived branches, PR into `main`, squash merge, conventional commits
-  (`feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`). Small PRs, one concern each.
+- Two long-lived branches. `develop` is where work inside a phase happens. `main` is production: it
+  moves once per phase, after the phase review, through one PR from `develop` into `main`.
+- Short-lived branches off `develop`, PR into `develop`, squash merge, conventional commits
+  (`feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`). Small PRs, one concern each. Never
+  open an ordinary PR against `main`.
+- The `develop` → `main` PR uses a **merge commit**, not squash. A squash would give `main` a commit
+  `develop` doesn't have, and every later phase PR would show old changes again.
 - Delete a feature branch only after its PR is merged.
 - Claude keeps `docs/medicare/04-progress-log.md` up to date: tick a checklist item as soon as it is
   done and verified, and keep "Current phase" accurate. Do not hand this back to the user.

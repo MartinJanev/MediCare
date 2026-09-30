@@ -46,7 +46,8 @@ Rules
 - Accessibility is a definition-of-done item for every component.
 
 ## Git and process
-- Trunk-based: short-lived branches, PR into `main`, squash merge.
+- `develop` for work inside a phase: short-lived branches, PR into `develop`, squash merge.
+- `main` is production. It is updated once per finished phase, after the phase review, by one PR from `develop` into `main` with a merge commit (not squash, so the branches never diverge).
 - Conventional commits: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`.
 - CI must be green before merging. No skipped tests without a linked issue.
 - Delete a feature branch only after its PR is merged.
