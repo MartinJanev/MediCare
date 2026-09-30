@@ -12,14 +12,14 @@ Versions below were verified on 2026-09-29. Pin exact versions in `pom.xml` and 
 | API docs | springdoc | Reads the controllers, serves `/swagger-ui.html`. TypeScript types are hand-written to match. |
 | Errors | RFC 9457 problem details | A standard JSON error shape; Spring Boot supports it natively |
 | Testing | JUnit 5, AssertJ, Mockito, Testcontainers, Vitest, Playwright | Playwright only in Phase 6, two tests |
-| Infra | Docker Compose, GitHub Actions | One CI job: `mvn verify` |
+| Infra | Docker Compose, GitHub Actions | One CI job: `./mvnw verify` |
 | Auth | Spring Security, users table, self-issued JWT | Phase 5. No external identity server. |
 
 ## Backend architecture: plain layers, packaged by feature
 Group files by **what they are about**, not by what kind of file they are. One package per feature:
 
 ```
-com.medicare.referral/
+mk.ukim.finki.medicare.referral/
   ReferralController.java     HTTP in, HTTP out. No business rules.
   ReferralService.java        The business rules. Owns @Transactional.
   ReferralRepository.java     Talks to the database.

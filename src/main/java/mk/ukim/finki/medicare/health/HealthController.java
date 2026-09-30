@@ -1,4 +1,4 @@
-package com.medicare.health;
+package mk.ukim.finki.medicare.health;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

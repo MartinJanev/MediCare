@@ -1,4 +1,4 @@
-package com.medicare.health;
+package mk.ukim.finki.medicare.health;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
