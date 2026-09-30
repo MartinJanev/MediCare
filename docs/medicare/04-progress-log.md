@@ -9,11 +9,11 @@ Phase 1: Foundations (in progress)
 ### Phase 1: Foundations
 - [x] Root `pom.xml` — Spring Boot 4.1.1, Java 25
 - [x] Angular 22.2.0 project in `frontend/`
-- [x] `frontend-maven-plugin` builds Angular into the jar (`mvn package` produces one artifact)
+- [x] `frontend-maven-plugin` builds Angular into the jar (`./mvnw package` produces one artifact)
 - [x] `proxy.conf.json` so `npm start` on :4200 reaches the backend on :8080
 - [x] Deep-link fallback: unknown non-`/api` paths serve `index.html`
 - [x] Docker Compose with PostgreSQL (done, in `infra/`)
-- [x] CI: one GitHub Actions job running `mvn verify`
+- [x] CI: one GitHub Actions job running `./mvnw verify`
 - [x] Spotless, ESLint, Prettier
 - [x] springdoc Swagger UI reachable
 - [ ] `/api/health` endpoint displayed by an Angular page

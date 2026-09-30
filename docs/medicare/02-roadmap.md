@@ -7,7 +7,7 @@ The repo is **one Maven project**. There is no `backend/` folder:
 ```
 MediCare/
 ├── pom.xml                 the whole app
-├── src/main/java/com/medicare/...
+├── src/main/java/mk/ukim/finki/medicare/...
 ├── src/main/resources/
 │   ├── application.yml
 │   └── db/migration/       Flyway migrations
@@ -20,21 +20,21 @@ MediCare/
 
 Two commands to remember:
 
-- `mvn spring-boot:run` — the whole app on `:8080`
-- `mvn package` — one jar with Angular inside it
+- `./mvnw spring-boot:run` — the whole app on `:8080`
+- `./mvnw package` — one jar with Angular inside it
 
 ---
 ## Phase 1: Foundations (week 1)
 **Goal:** a repo where every later change is safe to make.
 
 Tasks
-- Root `pom.xml`: Spring Boot 4.1.x, Java 25. Package `com.medicare`.
+- Root `pom.xml`: Spring Boot 4.1.x, Java 25. Package `mk.ukim.finki.medicare`.
 - Angular 22 project in `frontend/` (standalone components, zoneless, Vitest).
-- Wire the two together with `frontend-maven-plugin`. It downloads Node, runs `npm ci` and `npm run build`, and writes the result into `target/classes/static/` — which is where Spring Boot serves static files from. Result: `mvn package` produces one jar containing both.
-- **Development mode is different from production mode, and this trips people up.** While developing you run two processes: `mvn spring-boot:run` on `:8080` and `npm start` on `:4200`. You open `:4200` so you keep Angular's instant reload. A `frontend/proxy.conf.json` forwards anything starting with `/api` from `:4200` to `:8080`. In production there is only one process and no proxy, because the browser loads everything from `:8080`.
+- Wire the two together with `frontend-maven-plugin`. It downloads Node, runs `npm ci` and `npm run build`, and writes the result into `target/classes/static/` — which is where Spring Boot serves static files from. Result: `./mvnw package` produces one jar containing both.
+- **Development mode is different from production mode, and this trips people up.** While developing you run two processes: `./mvnw spring-boot:run` on `:8080` and `npm start` on `:4200`. You open `:4200` so you keep Angular's instant reload. A `frontend/proxy.conf.json` forwards anything starting with `/api` from `:4200` to `:8080`. In production there is only one process and no proxy, because the browser loads everything from `:8080`.
 - **The deep-link trap.** Once Angular is served by Spring Boot, opening `http://localhost:8080/triage` directly returns 404. Spring looks for a file called `triage` and finds none. Angular routing only works after `index.html` has loaded. Fix it by telling Spring to serve `index.html` for any path that is not a real file and not under `/api`. Write this in Phase 1 or you will hit it in Phase 4 and lose an evening.
 - Docker Compose with PostgreSQL 18; one command starts the database. (Already written, in `infra/`.)
-- GitHub Actions: **one** job that runs `mvn verify`. Because Maven builds the frontend too, that single command tests both sides.
+- GitHub Actions: **one** job that runs `./mvnw verify`. Because Maven builds the frontend too, that single command tests both sides.
 - Formatting: Spotless for Java, ESLint + Prettier for TypeScript.
 - springdoc dependency, so `/swagger-ui.html` documents the API automatically.
 - `.gitignore` and `.editorconfig` already target Maven (`target/`, `mvnw`); extend them if the scaffold adds anything new.
@@ -43,7 +43,7 @@ Tasks
 
 Learning objectives: build automation, how a single deployable is assembled, reproducible environments, CI, trunk-based workflow.
 
-Done when: fresh clone, database up, `mvn spring-boot:run`, and the browser shows a health status fetched from the backend. CI green.
+Done when: fresh clone, database up, `./mvnw spring-boot:run`, and the browser shows a health status fetched from the backend. CI green.
 
 ---
 ## Phase 2: Domain core (weeks 2-3)

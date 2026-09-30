@@ -1,12 +1,12 @@
-package com.medicare;
+package mk.ukim.finki.medicare;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MedicareApplication {
+public class MediCareApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MedicareApplication.class, args);
+        SpringApplication.run(MediCareApplication.class, args);
     }
 }

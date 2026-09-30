@@ -68,7 +68,8 @@ Flyway, no security. `GET /api/health` is the only endpoint.
 ```
 MediCare/
 ├── pom.xml                 the whole app, and it builds Angular too
-├── src/main/java/com/medicare/...      health/, config/ (SPA fallback)
+├── mvnw, .mvn/             Maven wrapper (pins Maven 3.9.16)
+├── src/main/java/mk/ukim/finki/medicare/...  health/, config/ (SPA fallback)
 ├── src/main/resources/     application.yml (db/migration arrives with Flyway in Phase 2)
 ├── src/test/java/
 ├── frontend/               Angular 22, built into the jar by Maven
@@ -77,23 +78,23 @@ MediCare/
 └── .github/workflows/ci.yml
 ```
 
-Needs JDK 25 and Maven installed (there is no `mvnw`). Every `mvn` run also builds Angular and
-downloads Node into `frontend/node/`, which is slow. For backend-only work add
+Needs JDK 25. Maven comes from the wrapper: use `./mvnw`, not a system `mvn`. Every `./mvnw` run
+also builds Angular and downloads Node into `frontend/node/`, which is slow. For backend-only work add
 `-Dskip.installnodenpm -Dskip.npm` to any command below.
 
 | Task | Command |
 |---|---|
-| Run the whole app on :8080 (API, UI, `/swagger-ui.html`) | `mvn spring-boot:run` |
+| Run the whole app on :8080 (API, UI, `/swagger-ui.html`) | `./mvnw spring-boot:run` |
 | Run the UI on :4200, proxying `/api` to :8080 | `cd frontend && npm start` |
-| Everything CI runs (lint, format, tests, jar) | `mvn verify` |
-| One jar with Angular inside | `mvn package` |
-| One Java test class / method | `mvn -Dtest=HealthControllerTest test` / `-Dtest='HealthControllerTest#healthReportsUp'` |
+| Everything CI runs (lint, format, tests, jar) | `./mvnw verify` |
+| One jar with Angular inside | `./mvnw package` |
+| One Java test class / method | `./mvnw -Dtest=HealthControllerTest test` / `-Dtest='HealthControllerTest#healthReportsUp'` |
 | One Angular spec | `cd frontend && npm test -- --no-watch --include src/app/app.spec.ts` |
-| Fix Java formatting (CI runs `spotless:check`) | `mvn spotless:apply` |
+| Fix Java formatting (CI runs `spotless:check`) | `./mvnw spotless:apply` |
 | Angular lint / Prettier check | `cd frontend && npm run lint` / `npm run format:check` |
 | Fix Angular formatting | `cd frontend && npx prettier --write .` |
 
-`mvn -Dtest=... test` still runs the Angular tests unless you add the skip flags.
+`./mvnw -Dtest=... test` still runs the Angular tests unless you add the skip flags.
 
 ## Architecture intent
 
@@ -101,8 +102,8 @@ The full conventions live in `docs/medicare/03-stack-and-conventions.md`; the pa
 change:
 
 **Backend — plain layers, packaged by feature.** One package per feature
-(`com.medicare.referral/`) holding `ReferralController`, `ReferralService`, `ReferralRepository`,
-the `Referral` entity and a `dto/` folder. The arrow points one way: controller → service →
+(`mk.ukim.finki.medicare.referral/`) holding `ReferralController`, `ReferralService`,
+`ReferralRepository`, the `Referral` entity and a `dto/` folder. The arrow points one way: controller → service →
 repository, never back. Controllers hold no business logic and never return an entity; DTOs never
 reach the database; services own the transaction boundary. Constructor injection only, records for
 DTOs and value objects. Validate at the boundary, enforce invariants in the domain. Domain

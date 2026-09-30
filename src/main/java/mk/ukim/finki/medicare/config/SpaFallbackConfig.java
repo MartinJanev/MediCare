@@ -1,4 +1,4 @@
-package com.medicare.config;
+package mk.ukim.finki.medicare.config;
 
 import java.io.IOException;
 import org.springframework.context.annotation.Configuration;

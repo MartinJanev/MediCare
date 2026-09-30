@@ -44,7 +44,7 @@ variables and are never committed.
 ## Status
 
 Pre-Phase 1: documentation only, no application code yet. Once Phase 1 lands, running it is
-`docker compose -f infra/docker-compose.yml up -d` followed by `mvn spring-boot:run`, and the
+`docker compose -f infra/docker-compose.yml up -d` followed by `./mvnw spring-boot:run`, and the
 app is at `http://localhost:8080`.
 
 ## Docs

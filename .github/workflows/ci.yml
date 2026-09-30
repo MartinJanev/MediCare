@@ -19,4 +19,4 @@ jobs:
           java-version: 25
           cache: maven
       # Builds Angular, lints, formats, tests both sides, and packages the single jar.
-      - run: mvn -B verify
+      - run: ./mvnw -B verify
